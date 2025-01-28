@@ -23,7 +23,7 @@ public class TypeCard : MonoBehaviour
 
     private void Start()
     {
-        Sort();
+        //Sort();
     }
 
     [ContextMenu("Sort")]
@@ -105,8 +105,4 @@ public class TypeCard : MonoBehaviour
         cards.Remove(card);
         return card;
     }
-
-
-
-
 }
