@@ -64,8 +64,6 @@ public class TypeCard : MonoBehaviour
         int o = Random.Range(0, 100);
         Card card = new();
 
-        print(cards.Count + "lista");
-
         if (o >= 75 || cards.Count <= 1)
         {
             foreach (Card c in cards)
