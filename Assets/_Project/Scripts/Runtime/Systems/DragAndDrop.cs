@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -5,20 +6,21 @@ using UnityEngine.InputSystem;
 
 public class DragAndDrop : MonoBehaviour
 {
-    private Vector3 curScreenPos;
-    private Camera mainCamera;
-    private bool isDragging;
+    private Vector3 _curScreenPos;
+    private Camera _mainCamera;
+    private bool _isDragging;
 
-    [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private InputActionAsset _inputActions;
+    [SerializeField] private LayerMask _playerCards;
 
-    public GameObject clickedObject;
-    public Vector3 startPosition;
+    public GameObject _clickedObject;
+    private IInteractiveObject interactiveObject;
 
     private Vector3 WorldPos
     {
         get
         {
-            return mainCamera.ScreenToWorldPoint(curScreenPos);
+            return _mainCamera.ScreenToWorldPoint(_curScreenPos);
         }
     }
 
@@ -26,13 +28,13 @@ public class DragAndDrop : MonoBehaviour
     {
         get
         {
-            var hits = Physics2D.RaycastAll(WorldPos, Vector2.zero, float.MaxValue);
+            var hits = Physics2D.RaycastAll(WorldPos, Vector2.zero, float.MaxValue, _playerCards);
 
             if (hits != null && hits.Length > 0)
             {
                 RaycastHit2D hit = hits.OrderByDescending(h => h.collider.gameObject).First();
-                clickedObject = hit.collider.gameObject;
-                startPosition = clickedObject.transform.position;
+                _clickedObject = hit.collider.gameObject;
+                interactiveObject = _clickedObject.GetComponent<IInteractiveObject>();
                 return true;
 
             }
@@ -42,28 +44,28 @@ public class DragAndDrop : MonoBehaviour
 
     private void Awake()
     {
-        mainCamera = Camera.main;
-        inputActions.FindAction("Point").performed += context => { curScreenPos = context.ReadValue<Vector2>(); };
-        inputActions.FindAction("Click").performed += _ => { if (IsClickedOn) StartCoroutine(Drag()); };
-        inputActions.FindAction("Click").canceled += _ => { isDragging = false; };
+        _mainCamera = Camera.main;
+        _inputActions.FindAction("Point").performed += context => { _curScreenPos = context.ReadValue<Vector2>(); };
+        _inputActions.FindAction("Click").performed += _ => { if (IsClickedOn) StartCoroutine(Drag()); };
+        _inputActions.FindAction("Click").canceled += _ => { _isDragging = false; };
     }
 
     private IEnumerator Drag()
     {
-        isDragging = true;
-        Vector3 offset = clickedObject.transform.position - WorldPos;
+        _isDragging = true;
+        Vector3 offset = _clickedObject.transform.position - WorldPos;
         // grab
-      
-        while (isDragging)
+
+        while (_isDragging)
         {
             // dragging
-            clickedObject.transform.position = WorldPos + offset;
+            _clickedObject.transform.position = WorldPos + offset;
             yield return null;
         }
         // drop
 
-        clickedObject.transform.position = startPosition;
-        clickedObject = null;
-        startPosition = Vector3.zero;
+        interactiveObject?.Drop(WorldPos);
     }
+
+   
 }
