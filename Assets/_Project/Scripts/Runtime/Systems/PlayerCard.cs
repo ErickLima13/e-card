@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerCard : MonoBehaviour,IInteractiveObject
 {
-    
     public bool isOnPlayerField;
 
     private TypeCard cardType;

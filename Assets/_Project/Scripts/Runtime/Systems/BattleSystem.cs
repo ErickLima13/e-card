@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
-
-    public List<TypeCard> CardsOne = new();
-    public List<TypeCard> CardsTwo = new();
-
     public TypeCard playerCard;
+    public TypeCard AICard;
 
     private bool isEmperor;
     private bool isCitizen;
@@ -33,86 +30,59 @@ public class BattleSystem : MonoBehaviour
     private void TakePlayerCard(TypeCard card)
     {
         playerCard = card;
+        CheckTypeOfCard(card);
         hasCardPlayer = true;
+    }
+
+    private void CheckTypeOfCard(TypeCard card)
+    {
+        switch (card)
+        {
+            case TypeCard.Citizen:
+                isCitizen = true;
+                break;
+            case TypeCard.Slave:
+                isSlave = true;
+                break;
+            case TypeCard.Emperor:
+                isEmperor = true;
+                break;
+        }
     }
 
     [ContextMenu("Sort")]
     private void Sort()
     {
-        CheckCards(ChooseCardToPlay(CardsOne, "primeira"), ChooseCardToPlay(CardsTwo, "segunda"));
+        Battle(playerCard, AICard);
     }
 
-    private void CheckCards(TypeCard cOne, TypeCard cTwo)
+    private void Battle(TypeCard cOne, TypeCard cTwo)
     {
-        if (cOne == cTwo)
+        if (hasCardPlayer && hasCardAI)
         {
-            print("empate");
-        }
-        else
-        {
-            if (isEmperor && isCitizen)
+            if (cOne == cTwo)
             {
-                print("imperador ganha");
+                print("empate");
             }
-            else if (isCitizen && isSlave)
+            else
             {
-                print("cidadao ganha");
-            }
-            else if (isEmperor && isSlave)
-            {
-                print("escravo ganha");
-            }
-        }
-
-        isCitizen = false;
-        isEmperor = false;
-        isSlave = false;
-    }
-
-    private TypeCard ChooseCardToPlay(List<TypeCard> cards, string message)
-    {
-        int o = Random.Range(0, 100);
-        TypeCard card = new();
-
-        if (o >= 75 || cards.Count <= 1)
-        {
-            foreach (TypeCard c in cards)
-            {
-                if (c == TypeCard.Emperor || c == TypeCard.Slave)
+                if (isEmperor && isCitizen)
                 {
-                    print($"{message} carta: {c}");
-                    card = c;
+                    print("imperador ganha");
+                }
+                else if (isCitizen && isSlave)
+                {
+                    print("cidadao ganha");
+                }
+                else if (isEmperor && isSlave)
+                {
+                    print("escravo ganha");
                 }
             }
-        }
-        else
-        {
-            foreach (TypeCard c in cards)
-            {
-                if (c == TypeCard.Citizen)
-                {
-                    print($"{message} carta: {c}");
-                    card = c;
-                    break;
-                }
-            }
-        }
 
-
-        if (card == TypeCard.Emperor)
-        {
-            isEmperor = true;
+            isCitizen = false;
+            isEmperor = false;
+            isSlave = false;
         }
-        else if (card == TypeCard.Slave)
-        {
-            isSlave = true;
-        }
-        else
-        {
-            isCitizen = true;
-        }
-
-        cards.Remove(card);
-        return card;
     }
 }
