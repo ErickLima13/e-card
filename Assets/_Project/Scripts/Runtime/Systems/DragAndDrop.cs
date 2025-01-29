@@ -3,14 +3,16 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DragDropable : MonoBehaviour
+public class DragAndDrop : MonoBehaviour
 {
-    [SerializeField] private InputAction press, screenPos;
-
     private Vector3 curScreenPos;
-
     private Camera mainCamera;
     private bool isDragging;
+
+    [SerializeField] private InputActionAsset inputActions;
+
+    public GameObject clickedObject;
+    public Vector3 startPosition;
 
     private Vector3 WorldPos
     {
@@ -19,46 +21,49 @@ public class DragDropable : MonoBehaviour
             return mainCamera.ScreenToWorldPoint(curScreenPos);
         }
     }
-    private bool isClickedOn
+
+    private bool IsClickedOn
     {
         get
         {
             var hits = Physics2D.RaycastAll(WorldPos, Vector2.zero, float.MaxValue);
 
-       
             if (hits != null && hits.Length > 0)
             {
                 RaycastHit2D hit = hits.OrderByDescending(h => h.collider.gameObject).First();
-                return hit.collider.gameObject == transform.gameObject;
+                clickedObject = hit.collider.gameObject;
+                startPosition = clickedObject.transform.position;
+                return true;
+
             }
             return false;
         }
     }
+
     private void Awake()
     {
         mainCamera = Camera.main;
-        screenPos.Enable();
-        press.Enable();
-
-        screenPos.performed += context => { curScreenPos = context.ReadValue<Vector2>(); };
-        press.performed += _ => { if (isClickedOn) StartCoroutine(Drag()); };
-        press.canceled += _ => { isDragging = false; };
-
+        inputActions.FindAction("Point").performed += context => { curScreenPos = context.ReadValue<Vector2>(); };
+        inputActions.FindAction("Click").performed += _ => { if (IsClickedOn) StartCoroutine(Drag()); };
+        inputActions.FindAction("Click").canceled += _ => { isDragging = false; };
     }
 
     private IEnumerator Drag()
     {
         isDragging = true;
-        Vector3 offset = transform.position - WorldPos;
+        Vector3 offset = clickedObject.transform.position - WorldPos;
         // grab
       
         while (isDragging)
         {
             // dragging
-            transform.position = WorldPos + offset;
+            clickedObject.transform.position = WorldPos + offset;
             yield return null;
         }
         // drop
-      
+
+        clickedObject.transform.position = startPosition;
+        clickedObject = null;
+        startPosition = Vector3.zero;
     }
 }
