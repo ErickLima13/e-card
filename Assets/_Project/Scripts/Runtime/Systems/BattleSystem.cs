@@ -32,6 +32,15 @@ public class BattleSystem : MonoBehaviour
         playerCard = card;
         CheckTypeOfCard(card);
         hasCardPlayer = true;
+        Battle(playerCard, AICard);
+    }
+
+    public void TakeOpponentCard(TypeCard card)
+    {
+        AICard = card;
+        CheckTypeOfCard(card);
+        hasCardAI = true;
+        Battle(playerCard, AICard);
     }
 
     private void CheckTypeOfCard(TypeCard card)
@@ -50,39 +59,35 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    [ContextMenu("Sort")]
-    private void Sort()
-    {
-        Battle(playerCard, AICard);
-    }
-
     private void Battle(TypeCard cOne, TypeCard cTwo)
     {
-        if (hasCardPlayer && hasCardAI)
+        if (!hasCardPlayer || !hasCardAI)
         {
-            if (cOne == cTwo)
-            {
-                print("empate");
-            }
-            else
-            {
-                if (isEmperor && isCitizen)
-                {
-                    print("imperador ganha");
-                }
-                else if (isCitizen && isSlave)
-                {
-                    print("cidadao ganha");
-                }
-                else if (isEmperor && isSlave)
-                {
-                    print("escravo ganha");
-                }
-            }
-
-            isCitizen = false;
-            isEmperor = false;
-            isSlave = false;
+            return;
         }
+
+        if (cOne == cTwo)
+        {
+            print("empate");
+        }
+        else
+        {
+            if (isEmperor && isCitizen)
+            {
+                print("imperador ganha");
+            }
+            else if (isCitizen && isSlave)
+            {
+                print("cidadao ganha");
+            }
+            else if (isEmperor && isSlave)
+            {
+                print("escravo ganha");
+            }
+        }
+
+        isCitizen = false;
+        isEmperor = false;
+        isSlave = false;
     }
 }

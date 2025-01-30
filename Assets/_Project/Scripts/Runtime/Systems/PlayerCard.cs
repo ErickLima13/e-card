@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
 
-public class PlayerCard : MonoBehaviour,IInteractiveObject
+public class PlayerCard : BaseCard, IInteractiveObject
 {
     public bool isOnPlayerField;
 
-    private TypeCard cardType;
     private Vector3 _startPosition;
     private Collider2D _collider;
 
@@ -15,7 +14,6 @@ public class PlayerCard : MonoBehaviour,IInteractiveObject
     {
         _startPosition = transform.position;
         _collider = GetComponent<Collider2D>();
-        cardType = TypeCard.Slave;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,7 +46,7 @@ public class PlayerCard : MonoBehaviour,IInteractiveObject
             if (_field != null)
             {
                 MoveToPosition(_field.transform.position);
-                _field.CardIsSet(cardType);
+                _field.CardIsSet(GetTypeOfCard());
                 _collider.enabled = false;
             }
         }

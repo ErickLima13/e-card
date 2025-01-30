@@ -32,8 +32,7 @@ public class DragAndDrop : MonoBehaviour
 
             if (hits != null && hits.Length > 0)
             {
-                RaycastHit2D hit = hits.OrderByDescending(h => h.collider.gameObject).First();
-                _clickedObject = hit.collider.gameObject;
+                _clickedObject = hits[0].collider.gameObject;
                 interactiveObject = _clickedObject.GetComponent<IInteractiveObject>();
                 return true;
 
@@ -48,6 +47,13 @@ public class DragAndDrop : MonoBehaviour
         _inputActions.FindAction("Point").performed += context => { _curScreenPos = context.ReadValue<Vector2>(); };
         _inputActions.FindAction("Click").performed += _ => { if (IsClickedOn) StartCoroutine(Drag()); };
         _inputActions.FindAction("Click").canceled += _ => { _isDragging = false; };
+    }
+
+    private void OnDisable()
+    {
+        _inputActions.FindAction("Point").performed -= context => { _curScreenPos = context.ReadValue<Vector2>(); };
+        _inputActions.FindAction("Click").performed -= _ => { if (IsClickedOn) StartCoroutine(Drag()); };
+        _inputActions.FindAction("Click").canceled -= _ => { _isDragging = false; };
     }
 
     private IEnumerator Drag()

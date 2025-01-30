@@ -1,32 +1,68 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class OpponentIA : MonoBehaviour
 {
-    public List<TypeCard> CardsOne = new();
+    [SerializeField] private GameObject cardPrefab;
+    public List<BaseCard> cards = new();
 
+    private BattleSystem _battleSystem;
 
-    private TypeCard ChooseCardToPlay(List<TypeCard> cards, string message)
+    public Transform fieldPos;
+
+    private void Start()
     {
-        int o = Random.Range(0, 100);
-        TypeCard card = new();
+        _battleSystem = FindFirstObjectByType<BattleSystem>();
 
-        if (o >= 75 || cards.Count <= 1)
+        for (int i = 0; i <= 4; i++)
         {
-            foreach (TypeCard c in cards)
+            GameObject c = Instantiate(cardPrefab, transform);
+            cards.Add(c.GetComponent<BaseCard>());
+        }
+
+        for (int i = 0; i <= 4; i++)
+        {
+            cards[i].SetCardType(TypeCard.Citizen);
+        }
+
+        cards[cards.Count - 1].SetCardType(TypeCard.Emperor);
+
+        for (int j = 0; j < cards.Count; j++)
+        {
+            float nx = j * cards[j].GetComponent<SpriteRenderer>().bounds.size.x * 0.5f;
+            cards[j].transform.position = new(nx,transform.position.y,0);
+        }
+
+        PlayCard();
+    }
+
+    private void PlayCard()
+    {
+        _battleSystem.TakeOpponentCard(ChooseCardToPlay(cards, "oponente"));
+    }
+
+    private TypeCard ChooseCardToPlay(List<BaseCard> cards, string message)
+    {
+        int chance = Random.Range(0, 100);
+        BaseCard card = new();
+
+        if (chance >= 75 || cards.Count <= 1)
+        {
+            foreach (BaseCard c in cards)
             {
-                if (c == TypeCard.Emperor || c == TypeCard.Slave)
+                if (c.GetTypeOfCard() == TypeCard.Emperor || c.GetTypeOfCard() == TypeCard.Slave)
                 {
-                    print($"{message} carta: {c}");
+                    print($"{message} carta: {c.GetTypeOfCard()}");
                     card = c;
                 }
             }
         }
         else
         {
-            foreach (TypeCard c in cards)
+            foreach (BaseCard c in cards)
             {
-                if (c == TypeCard.Citizen)
+                if (c.GetTypeOfCard() == TypeCard.Citizen)
                 {
                     print($"{message} carta: {c}");
                     card = c;
@@ -35,7 +71,13 @@ public class OpponentIA : MonoBehaviour
             }
         }
 
+
+
+
+
+        int id = cards.IndexOf(card);
+        cards[id].transform.position = fieldPos.position;
         cards.Remove(card);
-        return card;
+        return card.GetTypeOfCard();
     }
 }

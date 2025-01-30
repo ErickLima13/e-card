@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_0
+      name: citizen
       rect:
         serializedVersion: 2
         x: 0
@@ -147,7 +147,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -169,7 +169,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -191,7 +191,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -213,7 +213,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -227,7 +227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_4
+      name: emperor
       rect:
         serializedVersion: 2
         x: 816
@@ -235,7 +235,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -257,7 +257,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -279,7 +279,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -301,7 +301,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -323,7 +323,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -337,7 +337,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_9
+      name: slave
       rect:
         serializedVersion: 2
         x: 816
@@ -345,7 +345,7 @@ TextureImporter:
         width: 204
         height: 274
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -372,16 +372,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_0: 1173892082
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_1: -661903801
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_2: 121822446
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_3: 1062997690
-      _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_4: 248745960
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_5: 404135627
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_6: 1195034122
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_7: -1051099544
       _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_8: -722381760
-      _kaiji__e_card___set_deck_by_greysonx_d8ps69r-fullview_9: -2133581667
+      citizen: 1173892082
+      emperor: 248745960
+      slave: -2133581667
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
