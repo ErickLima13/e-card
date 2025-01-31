@@ -33,7 +33,7 @@ public class PlayerCard : BaseCard, IInteractiveObject
                 MoveToPosition(_field.transform.position);
                 _field.CardIsSet(GetTypeOfCard());
                 _collider.enabled = false;
-                turnControl.ChangeState(GameState.OpponentTurn);
+                turnControl.PlayCard(PlayerType.Player,GetTypeOfCard());
             }
         }
         else

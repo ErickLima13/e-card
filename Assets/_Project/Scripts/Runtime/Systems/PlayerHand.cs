@@ -1,26 +1,29 @@
-using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
 public class PlayerHand : MonoBehaviour
 {
+    private List<PlayerCard> cards = new();
+
     [SerializeField] private PlayerCard cardPrefab;
-    public List<PlayerCard> cards = new();
+    [SerializeField] private Transform handPos;
+    [SerializeField] private Vector3 posCard;
 
-    public Transform handPos;
+    [Inject]
+    private PlayerCardFactoryPlaceholder cardFactory;
 
-    public Vector3 posCard;
-
-    [SerializeField] [Inject] private PlayerCardFactoryPlaceholder cardFactory;
+    [Inject]
+    private TurnControl turnControl;
 
     private void Start()
     {
+        turnControl.CreateTurn(PlayerType.Player);
+
         for (int i = 0; i <= 4; i++)
         {
             var playerCard = cardFactory.Create(cardPrefab);
-            playerCard.transform.position = handPos.position;
+            playerCard.transform.parent = handPos;
             cards.Add(playerCard);
         }
 
@@ -34,8 +37,8 @@ public class PlayerHand : MonoBehaviour
         for (int i = 0; i < cards.Count; i++)
         {
             float newPositionX = i * cards[i].GetComponent<SpriteRenderer>().bounds.size.x * 0.8f;
-            posCard.x = newPositionX;
-            cards[i].transform.position = posCard;
+            posCard.x = newPositionX - 3f;
+            cards[i].transform.SetPositionAndRotation(posCard, Quaternion.Euler(0, 0, posCard.x * -1));
         }
 
     }

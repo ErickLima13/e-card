@@ -223,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 327258705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -4.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,9 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1305372103202791185, guid: 8ccfcce7a8a86ba4f8eea2a3f63f4b4f, type: 3}
-  cards: []
   handPos: {fileID: 327258706}
-  posCard: {x: 0, y: -4, z: 0}
+  posCard: {x: 0, y: -3.6, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +428,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 810217681070869777, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
   cards: []
   fieldPos: {fileID: 1647570992}
+  backCard: {fileID: -4571828015118065507, guid: 118d42b29b6c17b41bad0a3c066a2478, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,6 +961,8 @@ MonoBehaviour:
   playerCard: 0
   AICard: 0
   playerField: {fileID: 0}
+  battleResult: 0
+  turnControl: {fileID: 0}
 --- !u!1 &2142951949
 GameObject:
   m_ObjectHideFlags: 0

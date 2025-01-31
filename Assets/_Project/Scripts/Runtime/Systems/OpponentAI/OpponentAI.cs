@@ -1,6 +1,4 @@
-using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +16,10 @@ public class OpponentIA : MonoBehaviour
     [Inject]
     private TurnControl turnControl;
 
-    private async void Start()
+    [SerializeField] private Sprite backCard;
+
+
+    private void Start()
     {
         _battleSystem = FindFirstObjectByType<BattleSystem>();
 
@@ -38,30 +39,39 @@ public class OpponentIA : MonoBehaviour
         for (int j = 0; j < cards.Count; j++)
         {
             float nx = j * cards[j].GetComponent<SpriteRenderer>().bounds.size.x * 0.5f;
-            cards[j].transform.position = new(nx,transform.position.y,0);
+            cards[j].transform.position = new(nx, transform.position.y, 0);
         }
 
-        await UniTask.WaitWhile(() => turnControl.currentState != GameState.OpponentTurn);
+        foreach (BaseCard card in cards)
+        {
+            card.SetImageBack(backCard);
+        }
+    }
 
-        PlayCard();
+    private void Update()
+    {
+
+        if (turnControl.currentState == GameState.SecondPlayer)
+        {
+            PlayCard();
+        }
     }
 
     private void PlayCard()
     {
-        _battleSystem.TakeOpponentCard(ChooseCardToPlay(cards, "oponente"));
+        turnControl.PlayCard(PlayerType.AI, ChooseCardToPlay(cards));
     }
 
-    private TypeCard ChooseCardToPlay(List<BaseCard> cards, string message)
+    private TypeCard ChooseCardToPlay(List<BaseCard> cards)
     {
         int chance = Random.Range(0, 100);
-        
+
         if (chance >= 75 || cards.Count <= 1)
         {
             foreach (BaseCard c in cards)
             {
                 if (c.GetTypeOfCard() == TypeCard.Emperor || c.GetTypeOfCard() == TypeCard.Slave)
                 {
-                    print($"{message} carta: {c.GetTypeOfCard()}");
                     card = c;
                 }
             }
@@ -72,7 +82,6 @@ public class OpponentIA : MonoBehaviour
             {
                 if (c.GetTypeOfCard() == TypeCard.Citizen)
                 {
-                    print($"{message} carta: {c}");
                     card = c;
                     break;
                 }

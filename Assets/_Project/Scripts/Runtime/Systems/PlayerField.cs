@@ -16,6 +16,6 @@ public class PlayerField : MonoBehaviour
     public void CardIsSet(TypeCard typeCard)
     {
         OnCardIsPlayedEvent?.Invoke(typeCard);
-        detectCol.enabled = false;
+       // detectCol.enabled = false;
     }
 }

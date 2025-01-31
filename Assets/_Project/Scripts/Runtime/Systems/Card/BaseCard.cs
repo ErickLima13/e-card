@@ -39,5 +39,10 @@ public class BaseCard : MonoBehaviour
         return _cardType;
     }
 
+    public void SetImageBack(Sprite backSprite)
+    {
+        sRenderer.sprite = backSprite;
+    }
+
 
 }
