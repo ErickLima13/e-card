@@ -1,21 +1,27 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class PlayerHand : MonoBehaviour
 {
-    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private PlayerCard cardPrefab;
     public List<PlayerCard> cards = new();
 
     public Transform handPos;
 
     public Vector3 posCard;
 
+    [SerializeField] [Inject] private PlayerCardFactoryPlaceholder cardFactory;
+
     private void Start()
     {
         for (int i = 0; i <= 4; i++)
         {
-            GameObject c = Instantiate(cardPrefab, handPos);
-            cards.Add(c.GetComponent<PlayerCard>());
+            var playerCard = cardFactory.Create(cardPrefab);
+            playerCard.transform.position = handPos.position;
+            cards.Add(playerCard);
         }
 
         for (int i = 0; i <= 4; i++)
@@ -25,11 +31,11 @@ public class PlayerHand : MonoBehaviour
 
         cards[cards.Count - 1].SetCardType(TypeCard.Slave);
 
-        for (int j = 0; j < cards.Count; j++)
+        for (int i = 0; i < cards.Count; i++)
         {
-            float nx = j * cards[j].GetComponent<SpriteRenderer>().bounds.size.x * 0.5f;
-            posCard.x = nx;
-            cards[j].transform.position = posCard;
+            float newPositionX = i * cards[i].GetComponent<SpriteRenderer>().bounds.size.x * 0.8f;
+            posCard.x = newPositionX;
+            cards[i].transform.position = posCard;
         }
 
     }

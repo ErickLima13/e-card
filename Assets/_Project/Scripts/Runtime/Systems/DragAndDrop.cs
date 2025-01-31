@@ -41,6 +41,7 @@ public class DragAndDrop : MonoBehaviour
         }
     }
 
+
     private void Awake()
     {
         _mainCamera = Camera.main;
