@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class PlayerField : MonoBehaviour
 {
-    public event Action<TypeCard> OnCardIsPlayedEvent;
 
     private Collider2D detectCol;
+
+    [Inject]
+    public TurnControl turnControl;
 
     private void Start()
     {
@@ -15,7 +18,7 @@ public class PlayerField : MonoBehaviour
 
     public void CardIsSet(TypeCard typeCard)
     {
-        OnCardIsPlayedEvent?.Invoke(typeCard);
-       // detectCol.enabled = false;
+        turnControl.PlayCard(PlayerType.Player, typeCard);
+        // detectCol.enabled = false;
     }
 }

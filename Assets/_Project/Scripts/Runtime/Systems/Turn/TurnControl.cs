@@ -1,7 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum GameState
+{
+    ChooseFirstPlayer,
+    ArrangeCards
+}
+
+public enum BattleState
 {
     FirstPlayer,
     SecondPlayer,
@@ -17,7 +24,9 @@ public enum PlayerType
 
 public class TurnControl : MonoBehaviour
 {
-    public GameState currentState;
+    public BattleState currentBattleState;
+    public BattleResult battleResult;
+
     [SerializeField] public Turn currentTurn;
 
     [SerializeField] public List<Turn> turns = new();
@@ -25,7 +34,8 @@ public class TurnControl : MonoBehaviour
     public void CreateTurn(PlayerType firstPlayer)
     {
         currentTurn = new Turn(firstPlayer);
-        ChangeState(GameState.FirstPlayer);
+        ChangeBattleState(BattleState.FirstPlayer);
+        print(firstPlayer);
     }
 
     public void PlayCard(PlayerType playerType, TypeCard typeCard)
@@ -40,7 +50,7 @@ public class TurnControl : MonoBehaviour
 
         if (currentTurn.AllPlayersPlayed)
         {
-            ChangeState(GameState.Result);
+            ChangeBattleState(BattleState.Result);
             var firstPlayer = currentTurn.FirstPlayer;
             currentTurn.FinishTurn();
             print(currentTurn.BattleResult);
@@ -56,7 +66,7 @@ public class TurnControl : MonoBehaviour
             return;
         }
 
-        ChangeState(GameState.SecondPlayer);
+        ChangeBattleState(BattleState.SecondPlayer);
     }
 
     public void FinishTurn()
@@ -65,11 +75,11 @@ public class TurnControl : MonoBehaviour
         currentTurn = null;
     }
 
-    private void ChangeState(GameState state)
+    private void ChangeBattleState(BattleState state)
     {
-        if (currentState != state)
+        if (currentBattleState != state)
         {
-            currentState = state;
+            currentBattleState = state;
         }
     }
 }

@@ -206,7 +206,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 327258706}
-  - component: {fileID: 327258707}
   m_Layer: 6
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -229,21 +228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &327258707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327258705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04dea32d68983046bfa706d0e83b3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 1305372103202791185, guid: 8ccfcce7a8a86ba4f8eea2a3f63f4b4f, type: 3}
-  handPos: {fileID: 327258706}
-  posCard: {x: 0, y: -3.6, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35eff1bfd5337aa4db410808c7b87c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnControl: {fileID: 0}
 --- !u!1 &2050509741
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,8 +771,8 @@ GameObject:
   - component: {fileID: 2050509743}
   - component: {fileID: 2050509744}
   - component: {fileID: 2050509745}
-  - component: {fileID: 2050509747}
   - component: {fileID: 2050509746}
+  - component: {fileID: 2050509747}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -945,7 +930,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d072003120e054d9fb6781b6b27919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentBattleState: 3
+  battleResult: 0
+  turns: []
 --- !u!114 &2050509747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,14 +942,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2050509741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef7df6a2c7c49c44eb4d38997e60b882, type: 3}
+  m_Script: {fileID: 11500000, guid: ed281f4f89f4c4f44959901bcb59539f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCard: 0
-  AICard: 0
-  playerField: {fileID: 0}
-  battleResult: 0
-  turnControl: {fileID: 0}
+  currentGameState: 0
+  cardPrefab: {fileID: 1305372103202791185, guid: 8ccfcce7a8a86ba4f8eea2a3f63f4b4f, type: 3}
+  handPosPlayer: {fileID: 327258706}
+  handPosAI: {fileID: 575439962}
+  posCard: {x: 0, y: -3, z: 0}
+  baseCardPrefab: {fileID: 3997250695554994780, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
+  cardsAI: []
 --- !u!1 &2142951949
 GameObject:
   m_ObjectHideFlags: 0

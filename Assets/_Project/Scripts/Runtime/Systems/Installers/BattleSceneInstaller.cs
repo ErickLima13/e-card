@@ -8,7 +8,6 @@ public class BattleSceneInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<TurnControl>().FromInstance(turnControl);
-        Container.Bind<PlayerHand>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.BindFactory<PlayerCard, PlayerCard, PlayerCardFactoryPlaceholder>().FromFactory<PlayerCardFactory>();
     }
