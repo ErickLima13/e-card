@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ChangeGameState(GameState.ChooseFirstPlayer);
-        ChooseFisrtPlayer();
+        ChooseFirstPlayer();
     }
 
-    private void ChooseFisrtPlayer()
+    private void ChooseFirstPlayer()
     {
         int rand = Random.Range(0, 100);
 

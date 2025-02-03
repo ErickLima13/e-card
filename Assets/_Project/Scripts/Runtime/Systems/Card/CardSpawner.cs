@@ -6,10 +6,14 @@ using Zenject;
 
 public class CardSpawner : MonoBehaviour
 {
-    public event Action<List<BaseCard>> OnCardAICreateEvent;
+    public event Action OnAIIsFirstPlayerEvent;
 
     private List<PlayerCard> playerCards = new();
-    private List<BaseCard> cardsAI = new();
+
+    public List<BaseCard> CardsAI
+    {
+        get; private set;
+    }
 
     [SerializeField] private PlayerCard cardPrefab;
     [SerializeField] private BaseCard baseCardPrefab;
@@ -27,6 +31,11 @@ public class CardSpawner : MonoBehaviour
     [Inject]
     private readonly GameManager gameManager;
 
+    private void Start()
+    {
+        CardsAI = new();
+    }
+
 
     private void OnEnable()
     {
@@ -41,25 +50,24 @@ public class CardSpawner : MonoBehaviour
     private void CreateCards()
     {
         CreateCitizensPlayer(TypeCard.Citizen, playerCards, cardPrefab);
-        CreateCitizensAI(TypeCard.Citizen,cardsAI, baseCardPrefab);
+        CreateCitizensAI(TypeCard.Citizen,CardsAI, baseCardPrefab);
 
         switch (turnControl.currentTurn.FirstPlayer == PlayerType.Player) // trocar devido regra de 3 rodadas.
         {
             case true:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Emperor);
-                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Slave);
+                CreateAICard(CardsAI, baseCardPrefab, TypeCard.Slave);
                 break;
             case false:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Slave);
-                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Emperor);
+                CreateAICard(CardsAI, baseCardPrefab, TypeCard.Emperor);
+                OnAIIsFirstPlayerEvent?.Invoke();
                 break;
         }
 
         CardsInHand cardsInHand = new();
         cardsInHand.ArrangeCardsInHand(playerCards, posCard);
-        cardsInHand.ArrangeCardsInHandAI(cardsAI, posCard * -1);
-
-        OnCardAICreateEvent?.Invoke(cardsAI);
+        cardsInHand.ArrangeCardsInHandAI(CardsAI, posCard * -1);
     }
 
 

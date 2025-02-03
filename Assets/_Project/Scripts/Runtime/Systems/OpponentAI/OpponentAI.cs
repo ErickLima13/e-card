@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -21,7 +22,10 @@ public class OpponentIA : MonoBehaviour
 
     private void Start()
     {
-        cardSpawner.OnCardAICreateEvent += TakeCards;
+        TakeCards(cardSpawner.CardsAI);
+        turnControl.OnPlayerTurnEndEvent += PlayCardAI;
+        cardSpawner.OnAIIsFirstPlayerEvent += PlayCardAI;
+     
 
         //foreach (BaseCard card in cards)
         //{
@@ -31,18 +35,11 @@ public class OpponentIA : MonoBehaviour
 
     private void OnDisable()
     {
-        cardSpawner.OnCardAICreateEvent -= TakeCards;
+        turnControl.OnPlayerTurnEndEvent -= PlayCardAI;
+        cardSpawner.OnAIIsFirstPlayerEvent -= PlayCardAI;
     }
 
-    private void Update()
-    {
-        //if (turnControl.currentBattleState == BattleState.SecondPlayer)
-        //{
-        //    PlayCard();
-        //}
-    }
-
-    private void PlayCard()
+    private void PlayCardAI()
     {
         turnControl.PlayCard(PlayerType.AI, ChooseCardToPlay(cards));
     }
