@@ -1,96 +1,24 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public GameState currentGameState;
+    public event Action OnFirstPlayerChooseEvent;
 
-    private List<PlayerCard> playerCards = new();
-
-    [SerializeField] private PlayerCard cardPrefab;
-    [SerializeField] private Transform handPosPlayer;
-    [SerializeField] private Transform handPosAI;
-    [SerializeField] private Vector3 posCard;
-    [SerializeField] private BaseCard baseCardPrefab;
-
-    public List<BaseCard> cardsAI = new();
+    public GameState CurrentGameState
+    {
+        get; private set;
+    }
 
     [Inject]
-    private PlayerCardFactoryPlaceholder cardFactory;
-
-    [Inject]
-    private TurnControl turnControl;
-
+    private readonly TurnControl turnControl;
 
     private void Start()
     {
         ChangeGameState(GameState.ChooseFirstPlayer);
         ChooseFisrtPlayer();
-        CreateCards();
-    }
-
-    private void CreateCards()
-    {
-        CreateCitizens(true,TypeCard.Citizen,playerCards,null,cardPrefab);
-        CreateCitizens(false,TypeCard.Citizen, null, cardsAI, null, baseCardPrefab);
-
-        switch (turnControl.currentTurn.FirstPlayer == PlayerType.Player)
-        {
-            case true:
-                CreatePlayerCard(playerCards, cardPrefab, TypeCard.Emperor);
-                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Slave);
-                break;
-            case false:
-                CreatePlayerCard(playerCards, cardPrefab, TypeCard.Slave);
-                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Emperor);
-                break;
-        }
-
-        CardsInHand cardsInHand = new();
-
-
-  
-
-
-    }
-
-    private void CreateCitizens(bool isPlayer,TypeCard typeCard, List<PlayerCard> playerCards = null, List<BaseCard> baseCards = null, 
-        PlayerCard prefabPlayer = null, BaseCard baseCard = null)
-    {
-        if (isPlayer)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                CreatePlayerCard(playerCards, prefabPlayer,typeCard);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                CreateAICard(baseCards, baseCard,typeCard);
-            }
-        }
-    }
-
-    private void CreateAICard(List<BaseCard> baseCards, BaseCard baseCard, TypeCard typeCard)
-    {
-        var AICard = Instantiate(baseCard, transform);
-        AICard.transform.parent = handPosAI;
-        AICard.SetCardType(typeCard);
-        baseCards.Add(AICard);
-        AICard.name = typeCard.ToString();
-    }
-
-    private void CreatePlayerCard(List<PlayerCard> playerCards, PlayerCard prefabPlayer,TypeCard typeCard)
-    {
-        var playerCard = cardFactory.Create(prefabPlayer);
-        playerCard.SetCardType(typeCard);
-        playerCard.transform.parent = handPosPlayer;
-        playerCards.Add(playerCard);
-        playerCard.name = typeCard.ToString();
     }
 
     private void ChooseFisrtPlayer()
@@ -99,7 +27,7 @@ public class GameManager : MonoBehaviour
 
         if (rand % 2 == 0)
         {
-            turnControl.CreateTurn(PlayerType.Player);         
+            turnControl.CreateTurn(PlayerType.Player);
         }
         else
         {
@@ -107,13 +35,14 @@ public class GameManager : MonoBehaviour
         }
 
         ChangeGameState(GameState.ArrangeCards);
+        OnFirstPlayerChooseEvent?.Invoke();
     }
 
     private void ChangeGameState(GameState newState)
     {
-        if (currentGameState != newState)
+        if (CurrentGameState != newState)
         {
-            currentGameState = newState;
+            CurrentGameState = newState;
         }
     }
 

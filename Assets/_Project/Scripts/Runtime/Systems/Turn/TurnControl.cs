@@ -1,6 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+[Serializable]
+public class Round
+{
+    public PlayerType PlayerType;
+    public BattleResult battleResult;
+}
 
 public enum GameState
 {
@@ -27,13 +36,16 @@ public class TurnControl : MonoBehaviour
     public BattleState currentBattleState;
     public BattleResult battleResult;
 
-    [SerializeField] public Turn currentTurn;
+    public Turn currentTurn;
+    public PlayerType playerType;
+    public List<Turn> turns = new();
 
-    [SerializeField] public List<Turn> turns = new();
+    [SerializeField] private List<Round> rounds = new();
 
     public void CreateTurn(PlayerType firstPlayer)
     {
         currentTurn = new Turn(firstPlayer);
+        playerType = firstPlayer;
         ChangeBattleState(BattleState.FirstPlayer);
         print(firstPlayer);
     }
@@ -58,7 +70,7 @@ public class TurnControl : MonoBehaviour
             // TODO: Isso deve ser usado depois da animação de revelar as cartas
 
             FinishTurn();
-           
+
 
             // TODO: tirar isso e colocar na logica correta
             CreateTurn(firstPlayer);
@@ -72,7 +84,14 @@ public class TurnControl : MonoBehaviour
     public void FinishTurn()
     {
         turns.Add(currentTurn);
+ 
+        Round newRound = new Round();
+        newRound.PlayerType = playerType;
+        newRound.battleResult = battleResult;
+        rounds.Add(newRound);
+
         currentTurn = null;
+
     }
 
     private void ChangeBattleState(BattleState state)

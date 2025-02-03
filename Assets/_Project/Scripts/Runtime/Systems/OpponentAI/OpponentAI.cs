@@ -5,7 +5,6 @@ using Zenject;
 
 public class OpponentIA : MonoBehaviour
 {
-    [SerializeField] private GameObject cardPrefab;
     public List<BaseCard> cards = new();
 
     public Transform fieldPos;
@@ -14,29 +13,15 @@ public class OpponentIA : MonoBehaviour
     [Inject]
     private TurnControl turnControl;
 
+    [Inject]
+    private CardSpawner cardSpawner;
+
     [SerializeField] private Sprite backCard;
 
 
     private void Start()
     {
-        //for (int i = 0; i <= 4; i++)
-        //{
-        //    GameObject c = Instantiate(cardPrefab, transform);
-        //    cards.Add(c.GetComponent<BaseCard>());
-        //}
-
-        //for (int i = 0; i <= 4; i++)
-        //{
-        //    cards[i].SetCardType(TypeCard.Citizen);
-        //}
-
-        //cards[cards.Count - 1].SetCardType(TypeCard.Emperor);
-
-        //for (int j = 0; j < cards.Count; j++)
-        //{
-        //    float nx = j * cards[j].GetComponent<SpriteRenderer>().bounds.size.x * 0.5f;
-        //    cards[j].transform.position = new(nx, transform.position.y, 0);
-        //}
+        cardSpawner.OnCardAICreateEvent += TakeCards;
 
         //foreach (BaseCard card in cards)
         //{
@@ -44,17 +29,27 @@ public class OpponentIA : MonoBehaviour
         //}
     }
 
+    private void OnDisable()
+    {
+        cardSpawner.OnCardAICreateEvent -= TakeCards;
+    }
+
     private void Update()
     {
         //if (turnControl.currentBattleState == BattleState.SecondPlayer)
         //{
-        //   // PlayCard();
+        //    PlayCard();
         //}
     }
 
     private void PlayCard()
     {
         turnControl.PlayCard(PlayerType.AI, ChooseCardToPlay(cards));
+    }
+
+    private void TakeCards(List<BaseCard> baseCardList)
+    {
+        cards = baseCardList;
     }
 
     private TypeCard ChooseCardToPlay(List<BaseCard> cards)

@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnControl: {fileID: 2050509746}
+  gameManager: {fileID: 2050509747}
+  cardSpawner: {fileID: 2050509748}
 --- !u!114 &189199682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,7 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010556a0553d84947a86ec23fc80c9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 810217681070869777, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
   cards: []
   fieldPos: {fileID: 1647570992}
   backCard: {fileID: -4571828015118065507, guid: 118d42b29b6c17b41bad0a3c066a2478, type: 3}
@@ -773,8 +774,9 @@ GameObject:
   - component: {fileID: 2050509745}
   - component: {fileID: 2050509746}
   - component: {fileID: 2050509747}
+  - component: {fileID: 2050509748}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -932,7 +934,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBattleState: 3
   battleResult: 0
+  playerType: 0
   turns: []
+  rounds: []
 --- !u!114 &2050509747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,13 +949,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed281f4f89f4c4f44959901bcb59539f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGameState: 0
+--- !u!114 &2050509748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050509741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689d24bb644065a4fad83217ca746b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1305372103202791185, guid: 8ccfcce7a8a86ba4f8eea2a3f63f4b4f, type: 3}
+  baseCardPrefab: {fileID: 3997250695554994780, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
   handPosPlayer: {fileID: 327258706}
   handPosAI: {fileID: 575439962}
-  posCard: {x: 0, y: -3, z: 0}
-  baseCardPrefab: {fileID: 3997250695554994780, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
-  cardsAI: []
+  posCard: {x: 0, y: -3.5, z: 0}
 --- !u!1 &2142951949
 GameObject:
   m_ObjectHideFlags: 0
