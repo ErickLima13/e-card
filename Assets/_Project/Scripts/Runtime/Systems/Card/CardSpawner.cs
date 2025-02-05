@@ -6,10 +6,9 @@ using Zenject;
 
 public class CardSpawner : MonoBehaviour
 {
-
     private List<PlayerCard> playerCards = new();
     private List<BaseCard> CardsAI = new();
- 
+    private CardsInHand cardsInHand = new();
 
     [SerializeField] private PlayerCard cardPrefab;
     [SerializeField] private BaseCard baseCardPrefab;
@@ -26,6 +25,8 @@ public class CardSpawner : MonoBehaviour
 
     [Inject]
     private readonly GameManager gameManager;
+
+
 
     public List<BaseCard> GetAICards()
     {
@@ -45,7 +46,7 @@ public class CardSpawner : MonoBehaviour
     private void CreateCards()
     {
         CreateCitizensPlayer(TypeCard.Citizen, playerCards, cardPrefab);
-        CreateCitizensAI(TypeCard.Citizen,CardsAI, baseCardPrefab);
+        CreateCitizensAI(TypeCard.Citizen, CardsAI, baseCardPrefab);
 
         switch (turnControl.currentTurn.FirstPlayer == PlayerType.Player) // trocar devido regra de 3 rodadas.
         {
@@ -59,11 +60,14 @@ public class CardSpawner : MonoBehaviour
                 break;
         }
 
-        CardsInHand cardsInHand = new();
+        ArrangeCardsInHands();
+    }
+
+    private void ArrangeCardsInHands()
+    {
         cardsInHand.ArrangeCardsInHand(playerCards, posCard);
         cardsInHand.ArrangeCardsInHandAI(CardsAI, posCard * -1);
     }
-
 
     private void CreateCitizensPlayer(TypeCard typeCard, List<PlayerCard> playerCards, PlayerCard prefabPlayer)
     {

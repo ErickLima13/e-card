@@ -34,7 +34,6 @@ public enum PlayerType
 public class TurnControl : MonoBehaviour
 {
     public BattleState currentBattleState;
-    public BattleResult battleResult;
 
     public Turn currentTurn;
     public PlayerType currentPlayer;
@@ -64,17 +63,12 @@ public class TurnControl : MonoBehaviour
         if (currentTurn.AllPlayersPlayed)
         {
             ChangeBattleState(BattleState.Result);
-            var firstPlayer = currentTurn.FirstPlayer;
             currentTurn.FinishTurn();
             print(currentTurn.BattleResult);
 
             // TODO: Isso deve ser usado depois da animação de revelar as cartas
 
             FinishTurn();
-
-
-            // TODO: tirar isso e colocar na logica correta
-            //CreateTurn(firstPlayer);
 
             return;
         }
@@ -84,8 +78,22 @@ public class TurnControl : MonoBehaviour
 
     public void FinishTurn()
     {
+        BattleResult currentResult = currentTurn.BattleResult;
         turns.Add(currentTurn);
         currentTurn = null;
+
+        if (currentResult == BattleResult.Win)
+        {
+
+        }
+
+        if (currentResult == BattleResult.Tie)
+        {
+            // metodo de empate
+
+            CreateTurn(currentPlayer);
+            ChangeBattleState(BattleState.FirstPlayer);
+        }
     }
 
     private void ChangeBattleState(BattleState state)
