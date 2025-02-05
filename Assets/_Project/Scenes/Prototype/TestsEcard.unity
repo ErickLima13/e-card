@@ -416,8 +416,6 @@ MonoBehaviour:
   waitState: {fileID: 1467830624}
   chooseCardState: {fileID: 1467830626}
   playCardState: {fileID: 1467830625}
-  cards: []
-  fieldPos: {fileID: 1647570992}
   backCard: {fileID: -4571828015118065507, guid: 118d42b29b6c17b41bad0a3c066a2478, type: 3}
 --- !u!1 &619394800
 GameObject:
@@ -549,6 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c35dae58ca3fe4c85b62fda0a57a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFirstPlayer: 0
 --- !u!114 &1467830625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,7 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faae3fd7477a2af41b8d82cd94e47cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
+  mCards: []
 --- !u!1 &1647570990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBattleState: 3
   battleResult: 0
-  playerType: 0
+  currentPlayer: 0
   turns: []
   rounds: []
 --- !u!114 &2050509747
