@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -6,26 +5,38 @@ using Zenject;
 
 public class OpponentIA : MonoBehaviour
 {
+
+    public OpponentState state;
+
+
+    public WaitState waitState;
+    public ChooseCardState chooseCardState;
+    public PlayCardState playCardState;
+
+
+
     public List<BaseCard> cards = new();
 
     public Transform fieldPos;
     private BaseCard card;
 
-    [Inject]
-    private TurnControl turnControl;
-
-    [Inject]
-    private CardSpawner cardSpawner;
 
     [SerializeField] private Sprite backCard;
 
 
     private void Start()
     {
-        TakeCards(cardSpawner.CardsAI);
-        turnControl.OnPlayerTurnEndEvent += PlayCardAI;
-        cardSpawner.OnAIIsFirstPlayerEvent += PlayCardAI;
-     
+
+        waitState.Setup(this);
+        chooseCardState.Setup(this);
+        playCardState.Setup(this);
+
+        ChangeState(waitState);
+
+        //TakeCards(cardSpawner.CardsAI);
+        //turnControl.OnPlayerTurnEndEvent += PlayCardAI;
+        //cardSpawner.OnAIIsFirstPlayerEvent += PlayCardAI;
+
 
         //foreach (BaseCard card in cards)
         //{
@@ -33,21 +44,21 @@ public class OpponentIA : MonoBehaviour
         //}
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        turnControl.OnPlayerTurnEndEvent -= PlayCardAI;
-        cardSpawner.OnAIIsFirstPlayerEvent -= PlayCardAI;
+        state.Do();
     }
 
-    private void PlayCardAI()
+    public void ChangeState(OpponentState newState)
     {
-        turnControl.PlayCard(PlayerType.AI, ChooseCardToPlay(cards));
+        state?.Exit();
+        state = newState;
+        state.Enter();
     }
 
-    private void TakeCards(List<BaseCard> baseCardList)
-    {
-        cards = baseCardList;
-    }
+
+
+ 
 
     private TypeCard ChooseCardToPlay(List<BaseCard> cards)
     {

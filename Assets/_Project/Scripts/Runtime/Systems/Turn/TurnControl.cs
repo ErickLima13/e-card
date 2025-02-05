@@ -39,7 +39,7 @@ public class TurnControl : MonoBehaviour
     public BattleResult battleResult;
 
     public Turn currentTurn;
-    public PlayerType playerType;
+    public PlayerType currentPlayer;
     public List<Turn> turns = new();
 
     [SerializeField] private List<Round> rounds = new();
@@ -48,7 +48,7 @@ public class TurnControl : MonoBehaviour
     public void CreateTurn(PlayerType firstPlayer)
     {
         currentTurn = new Turn(firstPlayer);
-        playerType = firstPlayer;
+        currentPlayer = firstPlayer;
         ChangeBattleState(BattleState.FirstPlayer);
         print(firstPlayer);
     }
@@ -76,7 +76,7 @@ public class TurnControl : MonoBehaviour
 
 
             // TODO: tirar isso e colocar na logica correta
-            CreateTurn(firstPlayer);
+            //CreateTurn(firstPlayer);
 
             return;
         }
@@ -94,7 +94,7 @@ public class TurnControl : MonoBehaviour
         turns.Add(currentTurn);
  
         Round newRound = new Round();
-        newRound.PlayerType = playerType;
+        newRound.PlayerType = currentPlayer;
         newRound.battleResult = battleResult;
         rounds.Add(newRound);
 

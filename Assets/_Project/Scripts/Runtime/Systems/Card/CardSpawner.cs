@@ -6,14 +6,10 @@ using Zenject;
 
 public class CardSpawner : MonoBehaviour
 {
-    public event Action OnAIIsFirstPlayerEvent;
 
     private List<PlayerCard> playerCards = new();
-
-    public List<BaseCard> CardsAI
-    {
-        get; private set;
-    }
+    private List<BaseCard> CardsAI = new();
+ 
 
     [SerializeField] private PlayerCard cardPrefab;
     [SerializeField] private BaseCard baseCardPrefab;
@@ -31,11 +27,10 @@ public class CardSpawner : MonoBehaviour
     [Inject]
     private readonly GameManager gameManager;
 
-    private void Start()
+    public List<BaseCard> GetAICards()
     {
-        CardsAI = new();
+        return CardsAI;
     }
-
 
     private void OnEnable()
     {
@@ -61,7 +56,6 @@ public class CardSpawner : MonoBehaviour
             case false:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Slave);
                 CreateAICard(CardsAI, baseCardPrefab, TypeCard.Emperor);
-                OnAIIsFirstPlayerEvent?.Invoke();
                 break;
         }
 
