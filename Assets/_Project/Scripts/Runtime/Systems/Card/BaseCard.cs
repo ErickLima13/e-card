@@ -5,6 +5,8 @@ public class BaseCard : MonoBehaviour
     private SpriteRenderer sRenderer;
     [SerializeField] protected Sprite[] sprites;
 
+    [SerializeField] private Sprite backCard;
+
     private TypeCard _cardType;
 
     private void Awake()
@@ -39,10 +41,13 @@ public class BaseCard : MonoBehaviour
         return _cardType;
     }
 
-    public void SetImageBack(Sprite backSprite)
+    public void SetImageBack()
     {
-        sRenderer.sprite = backSprite;
+        sRenderer.sprite = backCard;
     }
 
+    public void RevealCard()
+    {
 
+    }
 }

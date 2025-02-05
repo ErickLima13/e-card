@@ -67,6 +67,11 @@ public class CardSpawner : MonoBehaviour
     {
         cardsInHand.ArrangeCardsInHand(playerCards, posCard);
         cardsInHand.ArrangeCardsInHandAI(CardsAI, posCard * -1);
+
+        foreach (var card in CardsAI)
+        {
+            card.SetImageBack();
+        }
     }
 
     private void CreateCitizensPlayer(TypeCard typeCard, List<PlayerCard> playerCards, PlayerCard prefabPlayer)

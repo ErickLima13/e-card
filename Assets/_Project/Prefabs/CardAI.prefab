@@ -104,3 +104,4 @@ MonoBehaviour:
   - {fileID: 1173892082, guid: 174b6b664e27c9d43be18bae55ed2938, type: 3}
   - {fileID: 248745960, guid: 174b6b664e27c9d43be18bae55ed2938, type: 3}
   - {fileID: -2133581667, guid: 174b6b664e27c9d43be18bae55ed2938, type: 3}
+  backCard: {fileID: -4571828015118065507, guid: 118d42b29b6c17b41bad0a3c066a2478, type: 3}

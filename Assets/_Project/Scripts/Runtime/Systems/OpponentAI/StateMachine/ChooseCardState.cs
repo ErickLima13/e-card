@@ -1,11 +1,11 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ChooseCardState : OpponentState
 {
-
-    public List<BaseCard> mCards = new();
+    private List<BaseCard> mCards = new();
     private BaseCard card;
 
     public override void Do()
@@ -19,7 +19,7 @@ public class ChooseCardState : OpponentState
 
         TakeCards(cardSpawner.GetAICards());
 
-        await UniTask.WaitUntil( () => mCards.Count > 0);
+        await UniTask.WaitUntil(() => mCards.Count > 0);
 
         opponentIA.ChangeState(opponentIA.playCardState);
     }
@@ -84,6 +84,13 @@ public class ChooseCardState : OpponentState
     public void SetCardInField(Transform target)
     {
         int id = mCards.IndexOf(card);
-        mCards[id].transform.SetPositionAndRotation(target.position, Quaternion.identity);
+        float duration = 0.5f;
+
+        var sequence = DOTween.Sequence();
+
+        sequence.Append(mCards[id].transform.DOJump(target.position, 2f, 1,duration));
+        sequence.Append(mCards[id].transform.DORotate(Vector3.zero, duration, RotateMode.Fast));
+        sequence.Append(mCards[id].transform.DOShakePosition(duration));
     }
+    
 }

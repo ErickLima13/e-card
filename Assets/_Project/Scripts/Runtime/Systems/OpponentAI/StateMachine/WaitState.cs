@@ -22,19 +22,11 @@ public class WaitState : OpponentState
         {
             print("AI : já joguei");
             await UniTask.WaitUntil(() => turnControl.currentBattleState == BattleState.FirstPlayer);
-            
-            //return;
         }
 
         if (!gameManager.IsAIFirstPlayer)
         {
             await UniTask.WaitUntil(() => turnControl.currentBattleState == BattleState.SecondPlayer);
-        }
-
-        if (turnControl.currentBattleState == BattleState.Result)
-        {
-            print("aguardando resutado");
-            return;
         }
 
         opponentIA.ChangeState(opponentIA.chooseCardState);

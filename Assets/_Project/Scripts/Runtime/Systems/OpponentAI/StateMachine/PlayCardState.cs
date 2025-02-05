@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayCardState : OpponentState
 {
-    public Transform fieldPos;
+    [SerializeField] private Transform fieldPos;
     [SerializeField] private Sprite backCard;
 
     private TypeCard mcardType;
@@ -20,6 +19,8 @@ public class PlayCardState : OpponentState
         mcardType = opponentIA.chooseCardState.ChooseCardToPlay();
 
         PlayCardAI();
+
+
     }
 
     public override void Exit()

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +18,7 @@ public class PlayerCard : BaseCard, IInteractiveObject
 
     public void MoveToPosition(Vector3 pointClick)
     {
-        transform.position = pointClick;
+        transform.DOJump(pointClick,2f,1,0.5f);
     }
 
     public void Drop(Vector2 pointClick)
@@ -27,6 +28,7 @@ public class PlayerCard : BaseCard, IInteractiveObject
             if (_field != null)
             {
                 MoveToPosition(_field.transform.position);
+                SetImageBack();
                 _field.CardIsSet(GetTypeOfCard());
                 _collider.enabled = false;
                 transform.rotation = Quaternion.identity;
