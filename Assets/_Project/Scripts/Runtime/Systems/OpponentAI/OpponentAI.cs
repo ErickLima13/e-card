@@ -8,18 +8,9 @@ public class OpponentIA : MonoBehaviour
 
     public OpponentState state;
 
-
     public WaitState waitState;
     public ChooseCardState chooseCardState;
     public PlayCardState playCardState;
-
-
-
-    public List<BaseCard> cards = new();
-
-    public Transform fieldPos;
-    private BaseCard card;
-
 
     [SerializeField] private Sprite backCard;
 
@@ -54,41 +45,5 @@ public class OpponentIA : MonoBehaviour
         state?.Exit();
         state = newState;
         state.Enter();
-    }
-
-
-
- 
-
-    private TypeCard ChooseCardToPlay(List<BaseCard> cards)
-    {
-        int chance = Random.Range(0, 100);
-
-        if (chance >= 75 || cards.Count <= 1)
-        {
-            foreach (BaseCard c in cards)
-            {
-                if (c.GetTypeOfCard() == TypeCard.Emperor || c.GetTypeOfCard() == TypeCard.Slave)
-                {
-                    card = c;
-                }
-            }
-        }
-        else
-        {
-            foreach (BaseCard c in cards)
-            {
-                if (c.GetTypeOfCard() == TypeCard.Citizen)
-                {
-                    card = c;
-                    break;
-                }
-            }
-        }
-
-        int id = cards.IndexOf(card);
-        cards[id].transform.position = fieldPos.position;
-        cards.Remove(card);
-        return card.GetTypeOfCard();
     }
 }

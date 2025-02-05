@@ -19,7 +19,7 @@ public class PlayerField : MonoBehaviour
     public void CardIsSet(TypeCard typeCard)
     {
         turnControl.PlayCard(PlayerType.Player, typeCard);
-        turnControl.CreateTurn(PlayerType.AI);
+   
         // detectCol.enabled = false;
     }
 }

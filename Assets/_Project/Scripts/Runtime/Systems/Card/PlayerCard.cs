@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,10 +7,7 @@ public class PlayerCard : BaseCard, IInteractiveObject
 
     private Vector3 _startPosition;
     private Collider2D _collider;
-    private  PlayerField _field;
-
-    [Inject]
-    public TurnControl turnControl;
+    private PlayerField _field;
 
     private void Start()
     {

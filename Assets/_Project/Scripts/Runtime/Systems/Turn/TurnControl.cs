@@ -33,15 +33,13 @@ public enum PlayerType
 
 public class TurnControl : MonoBehaviour
 {
-    public event Action OnPlayerTurnEndEvent;
-
     public BattleState currentBattleState;
     public BattleResult battleResult;
 
     public Turn currentTurn;
     public PlayerType currentPlayer;
-    public List<Turn> turns = new();
 
+    public List<Turn> turns = new();
     [SerializeField] private List<Round> rounds = new();
 
 
@@ -82,22 +80,11 @@ public class TurnControl : MonoBehaviour
         }
 
         ChangeBattleState(BattleState.SecondPlayer);
-
-        if (playerType == PlayerType.Player)
-        {
-            OnPlayerTurnEndEvent?.Invoke();
-        }
     }
 
     public void FinishTurn()
     {
         turns.Add(currentTurn);
- 
-        Round newRound = new Round();
-        newRound.PlayerType = currentPlayer;
-        newRound.battleResult = battleResult;
-        rounds.Add(newRound);
-
         currentTurn = null;
     }
 

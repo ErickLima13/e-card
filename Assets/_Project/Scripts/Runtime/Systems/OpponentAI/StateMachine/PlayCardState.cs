@@ -37,7 +37,8 @@ public class PlayCardState : OpponentState
         turnControl.PlayCard(PlayerType.AI,mcardType);
         opponentIA.chooseCardState.SetCardInField(fieldPos);
         opponentIA.chooseCardState.RemoveCardOfList(mcardType);
-        turnControl.CreateTurn(PlayerType.Player);
+       
+
         opponentIA.ChangeState(opponentIA.waitState);
     }
 }

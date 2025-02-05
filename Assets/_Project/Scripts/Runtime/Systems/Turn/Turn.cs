@@ -60,12 +60,14 @@ public class Turn
         if (IsFirstPlayerTurn)
         {
             FirstPlayerCard = typeCard;
+            UnityEngine.Debug.Log("primeiro jogador jogou");
             return;
         }
 
         if (IsSecondPlayerTurn)
         {
             SecondPlayerCard = typeCard;
+            UnityEngine.Debug.Log("segundo jogador jogou");
             return;
         }
 
