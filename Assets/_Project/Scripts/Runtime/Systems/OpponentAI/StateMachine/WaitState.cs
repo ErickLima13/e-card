@@ -2,8 +2,6 @@ using Cysharp.Threading.Tasks;
 
 public class WaitState : OpponentState
 {
-    public bool isFirstPlayer;
-
     public override void Enter()
     {
         base.Enter();
@@ -20,9 +18,13 @@ public class WaitState : OpponentState
     {
         await UniTask.WaitUntil(() => turnControl.currentTurn != null);
 
-        isFirstPlayer = turnControl.currentTurn.CurrentPlayerTurn == PlayerType.AI;
+        if (gameManager.IsAIFirstPlayer && turnControl.currentBattleState != BattleState.FirstPlayer)
+        {
+            print("AI : já joguei");
+            return;
+        }
 
-        if (!isFirstPlayer)
+        if (!gameManager.IsAIFirstPlayer)
         {
             await UniTask.WaitUntil(() => turnControl.currentBattleState == BattleState.SecondPlayer);
         }

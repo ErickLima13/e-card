@@ -1,11 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public event Action OnFirstPlayerChooseEvent;
+
+    public bool IsAIFirstPlayer
+    {
+        get; private set;
+    }
 
     public GameState CurrentGameState
     {
@@ -32,6 +38,7 @@ public class GameManager : MonoBehaviour
         else
         {
             turnControl.CreateTurn(PlayerType.AI);
+            IsAIFirstPlayer = true;
         }
 
         ChangeGameState(GameState.ArrangeCards);
@@ -45,5 +52,4 @@ public class GameManager : MonoBehaviour
             CurrentGameState = newState;
         }
     }
-
 }

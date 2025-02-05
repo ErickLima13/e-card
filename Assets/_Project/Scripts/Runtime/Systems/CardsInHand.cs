@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardsInHand : MonoBehaviour
+public class CardsInHand 
 {
-
-    
-
     public CardsInHand()
     {
     }
