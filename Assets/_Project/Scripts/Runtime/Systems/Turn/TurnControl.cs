@@ -21,6 +21,7 @@ public enum BattleState
 {
     FirstPlayer,
     SecondPlayer,
+    Animations,
     Battle,
     Result
 }
@@ -63,6 +64,10 @@ public class TurnControl : MonoBehaviour
         if (currentTurn.AllPlayersPlayed)
         {
             ChangeBattleState(BattleState.Result);
+
+           //ChangeBattleState(BattleState.Animations);
+
+
             currentTurn.FinishTurn();
             print(currentTurn.BattleResult);
 
@@ -87,9 +92,11 @@ public class TurnControl : MonoBehaviour
 
         }
 
+        //metodo de empate
+
         if (currentResult == BattleResult.Tie)
         {
-            // metodo de empate
+            
 
             CreateTurn(currentPlayer);
             ChangeBattleState(BattleState.FirstPlayer);

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class BaseCard : MonoBehaviour
@@ -48,6 +49,10 @@ public class BaseCard : MonoBehaviour
 
     public void RevealCard()
     {
+        Sequence seq = DOTween.Sequence();
 
+        seq.Append(transform.DORotate(new(0, 90, 0), 0.5f));
+        seq.AppendCallback(SetCardImage);
+        seq.Append(transform.DORotate(Vector3.zero, 0.5f));
     }
 }
