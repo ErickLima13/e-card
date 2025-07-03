@@ -55,4 +55,10 @@ public class BaseCard : MonoBehaviour
         seq.AppendCallback(SetCardImage);
         seq.Append(transform.DORotate(Vector3.zero, 0.5f));
     }
+
+    public void RemoveCardTheGame(float value)
+    {
+        transform.DOMoveX(value, 0.5f);
+       // sRenderer.sortingOrder++;
+    }
 }

@@ -16,9 +16,9 @@ public class PlayerField : MonoBehaviour
     }
 
 
-    public void CardIsSet(TypeCard typeCard)
+    public void CardIsSet(TypeCard typeCard,BaseCard card)
     {
-        turnControl.PlayCard(PlayerType.Player, typeCard);
+        turnControl.PlayCard(PlayerType.Player, typeCard,card);
    
         // detectCol.enabled = false;
     }

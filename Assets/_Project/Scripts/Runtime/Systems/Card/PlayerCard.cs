@@ -29,9 +29,9 @@ public class PlayerCard : BaseCard, IInteractiveObject
             {
                 MoveToPosition(_field.transform.position);
                 SetImageBack();
-                _field.CardIsSet(GetTypeOfCard());
+                _field.CardIsSet(GetTypeOfCard(),this);
                 _collider.enabled = false;
-                transform.rotation = Quaternion.identity;
+                transform.DORotate(Vector3.zero, 0.5f, RotateMode.Fast);
             }
         }
         else
@@ -46,11 +46,11 @@ public class PlayerCard : BaseCard, IInteractiveObject
         _field = collision.GetComponent<PlayerField>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        isOnPlayerField = true;
-        _field = collision.GetComponent<PlayerField>();
-    }
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    isOnPlayerField = true;
+    //    _field = collision.GetComponent<PlayerField>();
+    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {

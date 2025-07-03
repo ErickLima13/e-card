@@ -8,6 +8,8 @@ public class ChooseCardState : OpponentState
     private List<BaseCard> mCards = new();
     private BaseCard card;
 
+    public BaseCard GetBaseCard() => card;
+
     public override void Do()
     {
         base.Do();
@@ -90,7 +92,6 @@ public class ChooseCardState : OpponentState
 
         sequence.Append(mCards[id].transform.DOJump(target.position, 2f, 1,duration));
         sequence.Append(mCards[id].transform.DORotate(Vector3.zero, duration, RotateMode.Fast));
-        sequence.Append(mCards[id].transform.DOShakePosition(duration));
     }
     
 }
