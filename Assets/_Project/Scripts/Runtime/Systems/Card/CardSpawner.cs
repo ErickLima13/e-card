@@ -48,7 +48,7 @@ public class CardSpawner : MonoBehaviour
         CreateCitizensPlayer(TypeCard.Citizen, playerCards, cardPrefab);
         CreateCitizensAI(TypeCard.Citizen, CardsAI, baseCardPrefab);
 
-        switch (turnControl.currentTurn.FirstPlayer == PlayerType.Player) // trocar devido regra de 3 rodadas.
+        switch (turnControl._currentTurn.FirstPlayer == PlayerType.Player) // trocar devido regra de 3 rodadas.
         {
             case true:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Emperor);

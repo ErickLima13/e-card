@@ -5,14 +5,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-
-[Serializable]
-public class Round
-{
-    public PlayerType PlayerType;
-    public BattleResult battleResult;
-}
-
 public enum GameState
 {
     ChooseFirstPlayer,
@@ -23,7 +15,6 @@ public enum BattleState
 {
     FirstPlayer,
     SecondPlayer,
-    Animations,
     Battle,
     Result
 }
@@ -47,22 +38,28 @@ public struct CardsInField
     }
 }
 
- /* O jogo é dividido em 12 rounds, e cada jogador permanece com o mesmo deck por 3 rounds,
- * ou seja: se você começar com o Imperador, irá usalo por 3 turnos, depois passará pro seu 
- * oponente e usará o deck do escravo. Depois de 3 turnos, o seu oponente irá fazer o mesmo, 
- * e te passará o deck do Imperador, e assim vai, até alguém fazer 7 pontos ou o jogo acabar 
- * empatado, com cada jogador possuindo 6 pontos. Não há desempate. */
+
+// jogar uma carta é um turno
+// após os dois jogadores jogarem seu turno resulta um round.
+// partida é um jogo completo composto por uma vitoria ou 3 empates.
+
+/* O jogo é dividido em 12 partidas, e cada jogador permanece com o mesmo deck por 3 partidas,
+* ou seja: se você começar com o Imperador, irá usalo por 3 partidas, depois passará pro seu 
+* oponente e usará o deck do escravo. Depois de 3 partidas, o seu oponente irá fazer o mesmo, 
+* e te passará o deck do Imperador, e assim vai, até alguém fazer 7 pontos ou o jogo acabar 
+* empatado, com cada jogador possuindo 6 pontos. Não há desempate. */
 
 
 public class TurnControl : MonoBehaviour
 {
     public BattleState currentBattleState;
 
-    public Turn currentTurn;
+    public Turn _currentTurn;
+
     public PlayerType currentPlayer;
 
     public List<Turn> turns = new();
-    [SerializeField] private List<Round> rounds = new();
+    [SerializeField] private List<BattleResult> _rounds = new();
     [SerializeField] private CardsInField _cardsInFields;
 
     private BaseCard player;
@@ -70,7 +67,7 @@ public class TurnControl : MonoBehaviour
 
     public void CreateTurn(PlayerType firstPlayer)
     {
-        currentTurn = new Turn(firstPlayer);
+        _currentTurn = new Turn(firstPlayer);
         currentPlayer = firstPlayer;
         ChangeBattleState(BattleState.FirstPlayer);
         print(firstPlayer);
@@ -78,13 +75,13 @@ public class TurnControl : MonoBehaviour
 
     public void PlayCard(PlayerType playerType, TypeCard typeCard, BaseCard baseCard)
     {
-        if (playerType != currentTurn.CurrentPlayerTurn)
+        if (playerType != _currentTurn.CurrentPlayerTurn)
         {
             print("Jogador errado");
             return;
         }
 
-        currentTurn.PlayCard(typeCard);
+        _currentTurn.PlayCard(typeCard);
 
         switch (playerType)
         {
@@ -96,25 +93,11 @@ public class TurnControl : MonoBehaviour
                 break;
         }
 
-        if (currentTurn.AllPlayersPlayed)
+        if (_currentTurn.AllPlayersPlayed)
         {
             _cardsInFields = new(player, AI);
-
-            //ChangeBattleState(BattleState.Result);
-
-            ChangeBattleState(BattleState.Animations);
-
-            DelayAnimation();
-
-
-            currentTurn.FinishTurn();
-
-            print(currentTurn.BattleResult);
-
-            // TODO: Isso deve ser usado depois da animação de revelar as cartas
-
-           
-
+            ChangeBattleState(BattleState.Result);
+            _ = DelayAnimation();
             return;
         }
 
@@ -132,31 +115,34 @@ public class TurnControl : MonoBehaviour
         _cardsInFields.PlayerCard.RemoveCardTheGame(-7);
         _cardsInFields.AICard.RemoveCardTheGame(7);
 
-        await UniTask.WaitForSeconds(1f);
-        FinishTurn();
-
+        await UniTask.WaitForSeconds(0.5f);
+        ControlFinishTurn();
     }
 
-    public void FinishTurn()
+    public void ControlFinishTurn()
     {
-        BattleResult currentResult = currentTurn.BattleResult;
-        turns.Add(currentTurn);
-        currentTurn = null;
+        _currentTurn.FinishTurn();
 
-        if (currentResult == BattleResult.Win)
+        Turn _lastTurn = _currentTurn;
+
+        turns.Add(_lastTurn);
+
+        var currentResult = _lastTurn.BattleResult.GetResultPlayer(PlayerType.Player);
+
+        if (currentResult == BattleResultType.Win)
         {
-
+            print("ganhei otaria");
         }
 
         //metodo de empate
 
-        if (currentResult == BattleResult.Tie)
+        if (currentResult == BattleResultType.Tie)
         {
-
-
             CreateTurn(currentPlayer);
             ChangeBattleState(BattleState.FirstPlayer);
         }
+
+        _rounds.Add(_lastTurn.BattleResult);
     }
 
     private void ChangeBattleState(BattleState state)

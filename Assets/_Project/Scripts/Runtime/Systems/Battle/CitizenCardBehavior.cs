@@ -1,19 +1,21 @@
-public class CitizenCardBehavior : ICardBehavior
+public class CitizenCardBehavior : CardBehaviorBase
 {
-    public TypeCard Type => TypeCard.Citizen;
+    public override TypeCard Type => TypeCard.Citizen;
 
-    public BattleResult BattleAgainst(TypeCard card)
+    protected override BattleResultType CalculateBattleCards(TypeCard card)
     {
         switch (card)
         {
             case TypeCard.Citizen:
-                return BattleResult.Tie;
+                return BattleResultType.Tie;
             case TypeCard.Slave:
-                return BattleResult.Win;
+                return BattleResultType.Win;
             case TypeCard.Emperor:
-                return BattleResult.Defeat;
+                return BattleResultType.Defeat;
         }     
         
         throw new System.NotImplementedException();
     }
+
+   
 }

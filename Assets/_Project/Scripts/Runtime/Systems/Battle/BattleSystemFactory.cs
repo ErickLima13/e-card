@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class BattleSystemFactory 
 {
-    public static ICardBehavior Create(TypeCard typeCard)
+    public static CardBehaviorBase Create(TypeCard typeCard)
     {
         switch (typeCard)
         {

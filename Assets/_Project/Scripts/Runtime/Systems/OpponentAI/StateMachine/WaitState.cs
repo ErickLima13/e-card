@@ -16,7 +16,7 @@ public class WaitState : OpponentState
 
     private async void CheckFirstPlayer()
     {
-        await UniTask.WaitUntil(() => turnControl.currentTurn != null);
+        await UniTask.WaitUntil(() => turnControl._currentTurn != null);
 
         if (gameManager.IsAIFirstPlayer && turnControl.currentBattleState != BattleState.FirstPlayer)
         {

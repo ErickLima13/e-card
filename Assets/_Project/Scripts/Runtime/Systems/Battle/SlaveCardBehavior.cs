@@ -1,15 +1,15 @@
-public class SlaveCardBehavior : ICardBehavior
+public class SlaveCardBehavior : CardBehaviorBase
 {
-    public TypeCard Type => TypeCard.Slave;
+    public override TypeCard Type => TypeCard.Slave;
 
-    public BattleResult BattleAgainst(TypeCard card)
+    protected override BattleResultType CalculateBattleCards(TypeCard card)
     {
         switch (card)
         {
             case TypeCard.Citizen:
-                return BattleResult.Defeat;
+                return BattleResultType.Defeat;
             case TypeCard.Emperor:
-                return BattleResult.Win;
+                return BattleResultType.Win;
         }
 
         throw new System.NotImplementedException();

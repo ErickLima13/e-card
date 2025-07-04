@@ -77,6 +77,6 @@ public class Turn
     public void FinishTurn()
     {
         var cardBehavior = BattleSystemFactory.Create(FirstPlayerCard.Value);
-        BattleResult = cardBehavior.BattleAgainst(SecondPlayerCard.Value);
+        BattleResult = cardBehavior.BattleCards(SecondPlayerCard.Value, FirstPlayer);
     }
 }
