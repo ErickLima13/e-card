@@ -49,6 +49,8 @@ public struct CardsInField
 * e te passará o deck do Imperador, e assim vai, até alguém fazer 7 pontos ou o jogo acabar 
 * empatado, com cada jogador possuindo 6 pontos. Não há desempate. */
 
+// criar uma maquina de estado para cada tipo de deck para IA
+
 
 public class TurnControl : MonoBehaviour
 {

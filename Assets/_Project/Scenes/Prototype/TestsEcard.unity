@@ -510,9 +510,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467830623}
+  - component: {fileID: 1467830624}
   - component: {fileID: 1467830626}
   - component: {fileID: 1467830625}
-  - component: {fileID: 1467830624}
   m_Layer: 0
   m_Name: States
   m_TagString: Untagged
@@ -573,7 +573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faae3fd7477a2af41b8d82cd94e47cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCards: []
 --- !u!1 &1647570990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,10 +1008,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBattleState: 3
-  battleResult: 0
   currentPlayer: 0
   turns: []
-  rounds: []
+  _rounds: []
+  _cardsInFields:
+    PlayerCard: {fileID: 0}
+    AICard: {fileID: 0}
 --- !u!114 &2050509747
 MonoBehaviour:
   m_ObjectHideFlags: 0
