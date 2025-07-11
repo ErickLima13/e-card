@@ -23,17 +23,12 @@ public class ChooseCardState : OpponentState
 
         await UniTask.WaitUntil(() => mCards.Count > 0);
 
-        opponentIA.ChangeState(opponentIA.playCardState);
+        Manager.ChangeState(Manager.GetState<PlayCardState>());
     }
 
     public override void Exit()
     {
         base.Exit();
-    }
-
-    public override void FixedDo()
-    {
-        base.FixedDo();
     }
 
     private void TakeCards(List<BaseCard> baseCardList)

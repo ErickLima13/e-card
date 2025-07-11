@@ -1,5 +1,3 @@
-using System;
-using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -7,6 +5,11 @@ public class ChoosingTheFirstPlayerState : StateMachineBase
 {
     [Inject]
     private readonly TurnControl turnControl;
+
+    public bool IsAIFirstPlayer
+    {
+        get; private set;
+    }
 
     public override void Do()
     {
@@ -31,10 +34,12 @@ public class ChoosingTheFirstPlayerState : StateMachineBase
         if (rand % 2 == 0)
         {
             turnControl.CreateTurn(PlayerType.Player);
+            IsAIFirstPlayer = false;
         }
         else
         {
-            turnControl.CreateTurn(PlayerType.AI);  
+            turnControl.CreateTurn(PlayerType.AI);
+            IsAIFirstPlayer = true;
         }
 
         Manager.ChangeState(Manager.GetState<InGameState>());

@@ -18,27 +18,22 @@ public class PlayCardState : OpponentState
     {
         base.Enter();
 
-        _mcardType = opponentIA.chooseCardState.ChooseCardToPlay();
-        _mCard = opponentIA.chooseCardState.GetBaseCard();
+        _mcardType = Manager.GetState<ChooseCardState>().ChooseCardToPlay();
+        _mCard = Manager.GetState<ChooseCardState>().GetBaseCard();
 
         PlayCardAI();
     }
 
     public override void Exit()
     {
+       
         base.Exit();
-    }
-
-    public override void FixedDo()
-    {
-        base.FixedDo();
     }
 
     private void PlayCardAI()
     {
-        opponentIA.chooseCardState.SetCardInField(fieldPos);
-        opponentIA.chooseCardState.RemoveCardOfList(_mcardType);
+        Manager.GetState<ChooseCardState>().SetCardInField(fieldPos);
+        Manager.GetState<ChooseCardState>().RemoveCardOfList(_mcardType);
         turnControl.PlayCard(PlayerType.AI, _mcardType,_mCard);
-        opponentIA.ChangeState(opponentIA.waitState);
     }
 }

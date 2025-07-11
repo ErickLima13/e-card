@@ -1,10 +1,8 @@
 using UnityEngine;
 using Zenject;
 
-public class OpponentState : MonoBehaviour
+public class OpponentState : StateMachineBase
 {
-    protected OpponentIA opponentIA;
-
     [Inject]
     protected GameManager gameManager;
     [Inject]
@@ -12,27 +10,19 @@ public class OpponentState : MonoBehaviour
     [Inject]
     protected CardSpawner cardSpawner;
 
-    public virtual void Enter()
+    public override void Do()
     {
-        print(this.GetType().Name);
+        base.Do();
     }
 
-    public virtual void Do()
+    public override void Enter()
     {
+        base.Enter();
     }
 
-    public virtual void FixedDo()
+    public override void Exit()
     {
+        base.Exit();
     }
-
-    public virtual void Exit()
-    {
-    }
-
-    public void Setup(OpponentIA opponentIA)
-    {
-        this.opponentIA = opponentIA;
-    }
-
 }
 

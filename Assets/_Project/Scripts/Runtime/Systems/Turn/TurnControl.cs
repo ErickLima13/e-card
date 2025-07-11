@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
+using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 
 public enum GameManagerType
@@ -54,6 +56,8 @@ public struct CardsInField
 
 public class TurnControl : MonoBehaviour
 {
+    public event Action<PlayerType> OnCardPlayedEvent;
+
     public BattleState currentBattleState;
 
     public Turn _currentTurn;
@@ -63,6 +67,8 @@ public class TurnControl : MonoBehaviour
     public List<Turn> turns = new();
     [SerializeField] private List<BattleResult> _rounds = new();
     [SerializeField] private CardsInField _cardsInFields;
+
+    [Inject] private StateMachineManager _manager;
 
     private BaseCard player;
     private BaseCard AI;
@@ -84,6 +90,8 @@ public class TurnControl : MonoBehaviour
         }
 
         _currentTurn.PlayCard(typeCard);
+        OnCardPlayedEvent?.Invoke(playerType);
+
 
         switch (playerType)
         {
@@ -100,6 +108,7 @@ public class TurnControl : MonoBehaviour
             _cardsInFields = new(player, AI);
             ChangeBattleState(BattleState.Result);
             _ = DelayAnimation();
+            _manager.ChangeState(_manager.GetState<ResultSubState>());
             return;
         }
 
@@ -134,6 +143,7 @@ public class TurnControl : MonoBehaviour
         if (currentResult == BattleResultType.Win)
         {
             print("ganhei otaria");
+            _manager.ChangeState(_manager.GetState<FinalState>());
         }
 
         //metodo de empate
@@ -142,6 +152,7 @@ public class TurnControl : MonoBehaviour
         {
             CreateTurn(currentPlayer);
             ChangeBattleState(BattleState.FirstPlayer);
+            _manager.ChangeState(_manager.GetState<EmperorTurnSubState>());
         }
 
         _rounds.Add(_lastTurn.BattleResult);
