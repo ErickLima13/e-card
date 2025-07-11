@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FinalState : StateMachineBase
+public class ResultSubState : StateMachineBase
 {
     public override void Do()
     {

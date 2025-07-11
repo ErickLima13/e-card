@@ -7,7 +7,7 @@ using Zenject;
 public class CardSpawner : MonoBehaviour
 {
     private List<PlayerCard> playerCards = new();
-    private List<BaseCard> CardsAI = new();
+    private List<BaseCard> cardsAI = new();
     private CardsInHand cardsInHand = new();
 
     [SerializeField] private PlayerCard cardPrefab;
@@ -24,39 +24,37 @@ public class CardSpawner : MonoBehaviour
     private readonly TurnControl turnControl;
 
     [Inject]
-    private readonly GameManager gameManager;
-
-
+    private readonly StateMachineManager gameManager;
 
     public List<BaseCard> GetAICards()
     {
-        return CardsAI;
+        return cardsAI;
     }
 
     private void OnEnable()
     {
-        gameManager.OnFirstPlayerChooseEvent += CreateCards;
+        gameManager.GetState<DealTheCardsSubState>().OnFirstPlayerChooseEvent += CreateCards;
     }
 
     private void OnDisable()
     {
-        gameManager.OnFirstPlayerChooseEvent -= CreateCards;
+        gameManager.GetState<DealTheCardsSubState>().OnFirstPlayerChooseEvent -= CreateCards;
     }
 
     private void CreateCards()
     {
         CreateCitizensPlayer(TypeCard.Citizen, playerCards, cardPrefab);
-        CreateCitizensAI(TypeCard.Citizen, CardsAI, baseCardPrefab);
+        CreateCitizensAI(TypeCard.Citizen, cardsAI, baseCardPrefab);
 
         switch (turnControl._currentTurn.FirstPlayer == PlayerType.Player) // trocar devido regra de 3 rodadas.
         {
             case true:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Emperor);
-                CreateAICard(CardsAI, baseCardPrefab, TypeCard.Slave);
+                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Slave);
                 break;
             case false:
                 CreatePlayerCard(playerCards, cardPrefab, TypeCard.Slave);
-                CreateAICard(CardsAI, baseCardPrefab, TypeCard.Emperor);
+                CreateAICard(cardsAI, baseCardPrefab, TypeCard.Emperor);
                 break;
         }
 
@@ -66,9 +64,9 @@ public class CardSpawner : MonoBehaviour
     private void ArrangeCardsInHands()
     {
         cardsInHand.ArrangeCardsInHand(playerCards, posCard);
-        cardsInHand.ArrangeCardsInHandAI(CardsAI, posCard * -1);
+        cardsInHand.ArrangeCardsInHandAI(cardsAI, posCard * -1);
 
-        foreach (var card in CardsAI)
+        foreach (var card in cardsAI)
         {
             card.SetImageBack();
         }

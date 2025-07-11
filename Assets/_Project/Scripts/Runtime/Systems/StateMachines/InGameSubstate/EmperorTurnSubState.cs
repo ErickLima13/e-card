@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FinalState : StateMachineBase
+public class EmperorTurnSubState : StateMachineBase
 {
     public override void Do()
     {

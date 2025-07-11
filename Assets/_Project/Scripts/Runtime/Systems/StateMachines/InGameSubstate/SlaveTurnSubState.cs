@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FinalState : StateMachineBase
+public class SlaveTurnSubState : StateMachineBase
 {
     public override void Do()
     {

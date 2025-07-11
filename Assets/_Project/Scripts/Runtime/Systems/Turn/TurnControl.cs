@@ -72,7 +72,7 @@ public class TurnControl : MonoBehaviour
         _currentTurn = new Turn(firstPlayer);
         currentPlayer = firstPlayer;
         ChangeBattleState(BattleState.FirstPlayer);
-        print(firstPlayer);
+        print("primeiro jogador: " + firstPlayer);
     }
 
     public void PlayCard(PlayerType playerType, TypeCard typeCard, BaseCard baseCard)

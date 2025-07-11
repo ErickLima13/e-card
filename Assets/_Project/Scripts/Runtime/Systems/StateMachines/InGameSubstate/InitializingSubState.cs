@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FinalState : StateMachineBase
+public class InitializingSubState : StateMachineBase
 {
     public override void Do()
     {
@@ -10,6 +10,8 @@ public class FinalState : StateMachineBase
     public override void Enter()
     {
         base.Enter();
+
+        Manager.ChangeState(Manager.GetState<DealTheCardsSubState>());
     }
 
     public override void Exit()
