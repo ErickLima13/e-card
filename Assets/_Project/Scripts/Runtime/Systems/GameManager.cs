@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         get; private set;
     }
 
-    public GameState CurrentGameState
+    public GameManagerType CurrentGameState
     {
         get; private set;
     }
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeGameState(GameState.ChooseFirstPlayer);
+        ChangeGameState(GameManagerType.ChooseFirstPlayer);
         ChooseFirstPlayer();
     }
 
@@ -41,11 +41,11 @@ public class GameManager : MonoBehaviour
             IsAIFirstPlayer = true;
         }
 
-        ChangeGameState(GameState.ArrangeCards);
+        ChangeGameState(GameManagerType.ArrangeCards);
         OnFirstPlayerChooseEvent?.Invoke();
     }
 
-    private void ChangeGameState(GameState newState)
+    private void ChangeGameState(GameManagerType newState)
     {
         if (CurrentGameState != newState)
         {

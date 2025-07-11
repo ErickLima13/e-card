@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public enum GameState
+public enum GameManagerType
 {
     ChooseFirstPlayer,
     ArrangeCards

@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
-
 
 public class OpponentIA : MonoBehaviour
 {
-
     public OpponentState state;
 
     public WaitState waitState;
@@ -14,25 +10,12 @@ public class OpponentIA : MonoBehaviour
 
     [SerializeField] private Sprite backCard;
 
-
     private void Start()
     {
-
         waitState.Setup(this);
         chooseCardState.Setup(this);
         playCardState.Setup(this);
-
         ChangeState(waitState);
-
-        //TakeCards(cardSpawner.CardsAI);
-        //turnControl.OnPlayerTurnEndEvent += PlayCardAI;
-        //cardSpawner.OnAIIsFirstPlayerEvent += PlayCardAI;
-
-
-        //foreach (BaseCard card in cards)
-        //{
-        //    card.SetImageBack(backCard);
-        //}
     }
 
     private void Update()
