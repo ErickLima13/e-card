@@ -26,7 +26,6 @@ public class PlayCardState : OpponentState
 
     public override void Exit()
     {
-       
         base.Exit();
     }
 

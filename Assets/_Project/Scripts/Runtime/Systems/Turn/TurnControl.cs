@@ -7,20 +7,6 @@ using UnityEngine;
 using Zenject;
 
 
-public enum GameManagerType
-{
-    ChooseFirstPlayer,
-    ArrangeCards
-}
-
-public enum BattleState
-{
-    FirstPlayer,
-    SecondPlayer,
-    Battle,
-    Result
-}
-
 public enum PlayerType
 {
     Player = 1,
@@ -58,13 +44,10 @@ public class TurnControl : MonoBehaviour
 {
     public event Action<PlayerType> OnCardPlayedEvent;
 
-    public BattleState currentBattleState;
-
     public Turn _currentTurn;
 
     public PlayerType currentPlayer;
 
-    public List<Turn> turns = new();
     [SerializeField] private List<BattleResult> _rounds = new();
     [SerializeField] private CardsInField _cardsInFields;
 
@@ -77,7 +60,6 @@ public class TurnControl : MonoBehaviour
     {
         _currentTurn = new Turn(firstPlayer);
         currentPlayer = firstPlayer;
-        ChangeBattleState(BattleState.FirstPlayer);
         print("primeiro jogador: " + firstPlayer);
     }
 
@@ -106,13 +88,10 @@ public class TurnControl : MonoBehaviour
         if (_currentTurn.AllPlayersPlayed)
         {
             _cardsInFields = new(player, AI);
-            ChangeBattleState(BattleState.Result);
             _ = DelayAnimation();
             _manager.ChangeState(_manager.GetState<ResultSubState>());
             return;
         }
-
-        ChangeBattleState(BattleState.SecondPlayer);
     }
 
     private async Task DelayAnimation()
@@ -136,8 +115,6 @@ public class TurnControl : MonoBehaviour
 
         Turn _lastTurn = _currentTurn;
 
-        turns.Add(_lastTurn);
-
         var currentResult = _lastTurn.BattleResult.GetResultPlayer(PlayerType.Player);
 
         if (currentResult == BattleResultType.Win)
@@ -151,18 +128,9 @@ public class TurnControl : MonoBehaviour
         if (currentResult == BattleResultType.Tie)
         {
             CreateTurn(currentPlayer);
-            ChangeBattleState(BattleState.FirstPlayer);
             _manager.ChangeState(_manager.GetState<EmperorTurnSubState>());
         }
 
         _rounds.Add(_lastTurn.BattleResult);
-    }
-
-    private void ChangeBattleState(BattleState state)
-    {
-        if (currentBattleState != state)
-        {
-            currentBattleState = state;
-        }
     }
 }

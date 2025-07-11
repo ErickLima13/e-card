@@ -4,8 +4,6 @@ using Zenject;
 public class OpponentState : StateMachineBase
 {
     [Inject]
-    protected GameManager gameManager;
-    [Inject]
     protected TurnControl turnControl;
     [Inject]
     protected CardSpawner cardSpawner;

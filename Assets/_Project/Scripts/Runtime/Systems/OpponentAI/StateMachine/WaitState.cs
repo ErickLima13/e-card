@@ -4,7 +4,6 @@ public class WaitState : OpponentState
 {
     public bool AlreadyPlayed;
 
-    
     public override void Enter()
     {
         base.Enter();
@@ -43,6 +42,7 @@ public class WaitState : OpponentState
 
     public override void Exit()
     {
+        print("sai do wait");
         AlreadyPlayed = true;
         base.Exit();
     }
@@ -59,14 +59,13 @@ public class WaitState : OpponentState
 
     private void CheckIsMyTime(PlayerType player)
     {
-        if(player == PlayerType.Player)
+        if(player == PlayerType.AI)
         {
             return;
         }
-        else
+        else if(!AlreadyPlayed)
         {
             Manager.ChangeState(Manager.GetState<ChooseCardState>());
         }
-
     }
 }

@@ -207,6 +207,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd120fc57ad60a045b9977c76ac5227d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &107129819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107129820}
+  m_Layer: 0
+  m_Name: AIHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107129820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107129819}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 901099629}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &189199680
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnControl: {fileID: 2050509746}
-  gameManager: {fileID: 2050509747}
   cardSpawner: {fileID: 2050509748}
 --- !u!114 &189199682
 MonoBehaviour:
@@ -770,6 +800,7 @@ Transform:
   m_Children:
   - {fileID: 1467830623}
   - {fileID: 1647570992}
+  - {fileID: 107129820}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904512482
@@ -1184,6 +1215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c35dae58ca3fe4c85b62fda0a57a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlreadyPlayed: 0
 --- !u!1 &1467830622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1912,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2050509743}
   - component: {fileID: 2050509746}
-  - component: {fileID: 2050509747}
   - component: {fileID: 2050509748}
   m_Layer: 0
   m_Name: Managers
@@ -1923,18 +1954,6 @@ MonoBehaviour:
   _cardsInFields:
     PlayerCard: {fileID: 0}
     AICard: {fileID: 0}
---- !u!114 &2050509747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050509741}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed281f4f89f4c4f44959901bcb59539f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2050509748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,7 +1969,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 1305372103202791185, guid: 8ccfcce7a8a86ba4f8eea2a3f63f4b4f, type: 3}
   baseCardPrefab: {fileID: 3997250695554994780, guid: 200fc4cd43b9f59489c5321c50342396, type: 3}
   handPosPlayer: {fileID: 327258706}
-  handPosAI: {fileID: 0}
+  handPosAI: {fileID: 107129820}
   posCard: {x: 0, y: -3.5, z: 0}
 --- !u!1 &2135007678
 GameObject:
